@@ -1,0 +1,74 @@
+// Problem 06 Number of Days  In a Month  Short Logic
+#include <iostream>
+
+using namespace std;
+short ReadYear()
+{
+    short Year = 0;
+    cout << "Please enter a year to check:? ";
+    cin >> Year;
+    return Year;
+}
+short ReadMonth()
+{
+    short Month = 0;
+    cout << "Please enter a Month to check:? ";
+    cin >> Month;
+    return Month;
+}
+bool IsLeapYear(short Year)
+{
+    return (Year % 4 == 0 && Year % 100 != 0) || (Year % 400 == 0);
+
+
+}
+short NumberofDaysInAMonth(short Month, short Year)
+{
+    if (Month < 1 || Month>12)
+    {
+        return 0;
+    }
+
+    short NumberOfDays[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+    return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) :
+        NumberOfDays[Month - 1];
+        
+ 
+}
+short NumberofHouursInAMonth(short Month, short Year)
+{
+    return NumberofDaysInAMonth(Month, Year) * 24;
+}
+int NumberofminutesInAMonth(short Month, short Year)
+{
+    return NumberofHouursInAMonth(Month, Year) * 60;
+}
+int NumberofSecondsInAMonth(short Month, short Year)
+{
+    return NumberofminutesInAMonth(Month, Year) * 60;
+}
+int main()
+{
+    short Year = ReadYear();
+
+
+    short Month = ReadMonth();
+
+
+    cout << "\n\n\n";
+    cout << "Number of days in Month    [" << Month << "] is "
+        << NumberofDaysInAMonth(Month, Year) << endl;
+
+    cout << "Number of Houurs in Month  [" << Month << "] is "
+        << NumberofHouursInAMonth(Month, Year) << endl;
+
+    cout << "Number of minutes in Month [" << Month << "] is "
+        << NumberofminutesInAMonth(Month, Year) << endl;
+
+    cout << "Number of Seconds in Month [" << Month << "] is "
+        << NumberofSecondsInAMonth(Month, Year) << endl;
+
+
+    system("pause>0");
+    return 0;
+}
