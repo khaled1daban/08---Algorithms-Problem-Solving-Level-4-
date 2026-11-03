@@ -1,0 +1,77 @@
+// Problem 07 Day Name
+
+#include <iostream>
+
+using namespace std;
+short ReadDay() 
+{
+    short Day;
+    do 
+    {
+        
+        cout << "Pleas Entar a Day? ";
+        cin >> Day;
+    } while (Day < 1 || Day > 31);
+
+
+        return Day;
+}
+short ReadMonth()
+{
+    short Month;
+    do 
+    {
+        cout << "Pleas Entar a Month? ";
+        cin >> Month;
+    } while (Month < 1 || Month > 12);
+    
+   
+    return Month;
+}
+short ReadYear()
+{
+    short year;
+    do 
+    {
+        cout << "Pleas Entar a Year Between [1900 ] To [2200]? ";
+        cin >> year;
+    } while (year < 1900 || year > 2200);
+
+    
+    return year;
+}
+int DayOfWeekOrder(short Day , short Month, short Year)
+{
+   
+    int a = (14 - 12) / Month;
+    int y = Year - a;
+    int m = Month + (12 * a) - 2;
+
+    return  (Day + y + (y / 4) - (y / 100) + (y / 400) +
+        ((31 * m) / 12)) % 7;
+
+   
+}
+string DaysName(int DayName)
+{
+    string DaysOfWeek[7] = {
+        "Sunday","Monday"  ,"Tuesday" , "Wednesday",
+        "Thursday", "Friday",    "Saturday" };
+    return DaysOfWeek[DayName];
+}
+int main()
+{
+    short Day = ReadDay();
+    short Month = ReadMonth();
+    short year = ReadYear();
+
+    cout << "\n\n Data :" << Day << "/" << Month << "/" << year << endl;
+
+    cout << " Day order :" << DayOfWeekOrder(Day, Month, year) << endl;
+    cout << " Day Name  :" << DaysName(DayOfWeekOrder(Day, Month, year)) << endl;
+
+
+
+    system("pause>0");
+    return 0;
+}
