@@ -1,0 +1,115 @@
+// P 16 Increase Date By One Day
+
+#include <iostream>
+
+using namespace std;
+struct sDate {
+    short Day;
+    short Month;
+    short Year;
+};
+bool IsLeapYear(short Year)
+{
+    return (Year % 4 == 0 && Year % 100 != 0) || (Year % 400 == 0);
+
+
+}
+short NumberofDaysInAMonth(short Month, short Year)
+{
+    if (Month < 1 || Month>12)
+    {
+        return 0;
+    }
+
+    short NumberOfDays[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+    return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) :
+        NumberOfDays[Month - 1];
+
+
+}
+bool IsLsatDay(sDate Date)
+{
+    return (Date.Day == NumberofDaysInAMonth(Date.Month, Date.Year));
+}
+bool IsLastMonth(short Month)
+{
+    return (Month == 12);
+}
+sDate IncreaseDateByOneDay(sDate Date)
+{
+    if (IsLsatDay(Date))
+    {
+        if (IsLastMonth(Date.Month))
+        {
+            Date.Day = 1;
+            Date.Month = 1;
+            Date.Year++;
+        }
+        else
+        {
+            Date.Day = 1;
+            Date.Month++;
+        }
+    }
+    else 
+    {
+        Date.Day++;
+    }
+
+    return Date;
+    
+        
+}
+
+short ReadDay()
+{
+    short Day = 0;
+    cout << "\nPleas Entar a Day? ";
+    cin >> Day;
+    return Day;
+}
+short ReadMonth()
+{
+    short Month;
+    do
+    {
+        cout << "Pleas Entar a Month? ";
+        cin >> Month;
+    } while (Month < 1 || Month > 12);
+
+
+    return Month;
+}
+short ReadYear()
+{
+    short year;
+    do
+    {
+        cout << "Pleas Entar a Year Between [1900 ] To [2200]? ";
+        cin >> year;
+    } while (year < 1900 || year > 2200);
+
+
+    return year;
+}
+sDate ReadFullDays()
+{
+    sDate Date;
+    Date.Day = ReadDay();
+    Date.Month = ReadMonth();
+    Date.Year = ReadYear();
+    return Date;
+}
+
+int main()
+{
+
+    sDate Date = ReadFullDays();
+    Date = IncreaseDateByOneDay(Date);
+
+    cout << "\nDate after adding one day is: "
+        << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+    system("pause>0");
+    return 0;
+}
