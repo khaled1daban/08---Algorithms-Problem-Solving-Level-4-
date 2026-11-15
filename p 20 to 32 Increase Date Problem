@@ -1,0 +1,280 @@
+// p 20 to 32 Increase Date Problem
+#include <iostream>
+
+using namespace std;
+struct sDate {
+    short Day;
+    short Month;
+    short Year;
+};
+bool IsLeapYear(short Year)
+{
+    return (Year % 4 == 0 && Year % 100 != 0) || (Year % 400 == 0);
+
+
+}
+short NumberofDaysInAMonth(short Month, short Year)
+{
+    if (Month < 1 || Month>12)
+    {
+        return 0;
+    }
+
+    short NumberOfDays[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+    return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) :
+        NumberOfDays[Month - 1];
+
+
+}
+bool IsLsatDay(sDate Date)
+{
+    return (Date.Day == NumberofDaysInAMonth(Date.Month, Date.Year));
+}
+bool IsLastMonth(short Month)
+{
+    return (Month == 12);
+}
+sDate IncreaseDateByOneDay(sDate Date)
+{
+    if (IsLsatDay(Date))
+    {
+        if (IsLastMonth(Date.Month))
+        {
+            Date.Day = 1;
+            Date.Month = 1;
+            Date.Year++;
+        }
+        else
+        {
+            Date.Day = 1;
+            Date.Month++;
+        }
+    }
+    else
+    {
+        Date.Day++;
+    }
+
+    return Date;
+
+
+}
+
+short ReadDay()
+{
+    short Day = 0;
+    cout << "\nPleas Entar a Day? ";
+    cin >> Day;
+    return Day;
+}
+short ReadMonth()
+{
+    short Month;
+    do
+    {
+        cout << "Pleas Entar a Month? ";
+        cin >> Month;
+    } while (Month < 1 || Month > 12);
+
+
+    return Month;
+}
+short ReadYear()
+{
+    short year;
+    do
+    {
+        cout << "Pleas Entar a Year Between [1900 ] To [2200]? ";
+        cin >> year;
+    } while (year < 1900 || year > 2200);
+
+
+    return year;
+}
+sDate ReadFullDays()
+{
+    sDate Date;
+    Date.Day = ReadDay();
+    Date.Month = ReadMonth();
+    Date.Year = ReadYear();
+    return Date;
+}
+
+sDate IncreaseDateByXDays(short Day, sDate Date)
+{
+    for (short i = 1; i <= Day; i++)
+    {
+        Date = IncreaseDateByOneDay(Date);
+    }
+    return Date;
+}
+sDate IncreaseDateByOneWeeks(sDate Date) 
+{
+    for (short i = 1; i <= 7; i++)
+    {
+        Date = IncreaseDateByOneDay(Date);
+    }
+    return Date;
+}
+sDate IncreaseDateByXWeeks(short Weeks,sDate Date)
+{
+    for (short i = 1; i <= Weeks; i++)
+    {
+        Date = IncreaseDateByOneWeeks(Date);
+    }
+    return Date;
+}
+sDate IncreaseDateByOneMonth(sDate Date)
+{
+    if (IsLastMonth(Date.Month))
+    {
+        Date.Month = 1;
+        Date.Year++;
+    }
+    else 
+    {
+        Date.Month++;
+        short NumberOfDaysInCurrentMonth =
+            NumberofDaysInAMonth(Date.Month , Date.Year);
+        if (Date.Day > NumberOfDaysInCurrentMonth)
+            Date.Day = NumberOfDaysInCurrentMonth;
+    }
+    return Date;
+}
+
+sDate IncreaseDateByXMonths(short Months, sDate Date)
+{
+
+    for (short i = 1; i <= Months; i++)
+    {
+        Date = IncreaseDateByOneMonth(Date);
+    }
+    return Date;
+}
+sDate IncreaseDateByOneYear(sDate Date) 
+{
+    Date.Year++;
+    return Date;
+}
+sDate IncreaseDateByXYears(short Years, sDate Date)
+{
+    for (short i = 1; i <= Years; i++)
+    {
+        Date = IncreaseDateByOneYear(Date);
+    }
+    return Date;
+}
+sDate IncreaseDateByXYearsFaster(short Years, sDate Date)
+{
+    Date.Year += Years;
+    return Date;
+}
+
+sDate IncreaseDateByOneDecade(sDate Date) 
+{
+    for (short i = 1; i <= 10; i++)
+    {
+        Date = IncreaseDateByOneYear(Date);
+    }
+    return Date;
+}
+
+sDate IncreaseDateByXDecades(short Decades, sDate Date)
+{
+    for (short i = 1; i <= 10 * Decades; i++)
+    {
+        Date = IncreaseDateByOneYear(Date);
+    }
+    return Date;
+}
+
+sDate IncreaseDateByXDecadesFaster(short Decades, sDate Date)
+{
+    Date.Year += 10 * Decades;
+    return Date;
+}
+
+sDate IncreaseDateByOneCentury(sDate Date) 
+{
+
+    Date.Year += 100;
+    return Date;
+}
+
+sDate IncreaseDateByOneMillennium(sDate Date) 
+{
+    Date.Year += 1000;
+    return Date;
+}
+
+int main()
+{
+
+    sDate Date = ReadFullDays();
+
+    cout << "Date After :\n\n";
+    Date = IncreaseDateByOneDay(Date);
+    cout << "\nAdding One Days Is: "
+        << Date.Day << "/" << Date.Month << "/" << Date.Year;
+    
+    Date = IncreaseDateByXDays(10,Date);
+    cout << "\nAdding 10 Days Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+    Date = IncreaseDateByOneWeeks(Date);
+    cout << "\nAdding One Week Days Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+    Date = IncreaseDateByXWeeks(10, Date);
+    cout << "\nAdding 10 Week Days Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+
+    Date = IncreaseDateByOneMonth(Date);
+    cout << "\nAdding One Month Days Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+
+    Date = IncreaseDateByXMonths(5 ,Date);
+    cout << "\nAdding 10 Month Days Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+
+    Date = IncreaseDateByOneYear(Date);
+    cout << "\nAdding One Century Days Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+
+    Date = IncreaseDateByXYears(10, Date);
+    cout << "\nAdding 10 Year Day Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+    Date = IncreaseDateByXYearsFaster(10, Date);
+    cout << "\nAdding 10 Year (Faster) Day Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+    Date = IncreaseDateByOneDecade(Date);
+    cout << "\nAdding One Decade  Day Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+    Date = IncreaseDateByXDecades(10, Date);
+    cout << "\nAdding 10 Decade Days Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+
+    Date = IncreaseDateByXDecadesFaster(10, Date);
+    cout << "\nAdding 10 Decade (Faster) Days Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+    Date = IncreaseDateByOneCentury(Date);
+    cout << "\nAdding One Century Days Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+    Date = IncreaseDateByOneMillennium(Date);
+    cout << "\nAdding One Millennium Days Is: ";
+    cout << Date.Day << "/" << Date.Month << "/" << Date.Year;
+
+
+    system("pause>0");
+    return 0;
+}
