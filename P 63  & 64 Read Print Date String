@@ -1,0 +1,72 @@
+// P 63  & 64 Read Print Date String
+
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+struct stDate {
+    short Day;
+    short Month;
+    short Year;
+};
+string ReadString(string masseg)
+{
+    string s1;
+    cout << masseg;
+    getline(cin >> ws, s1);
+    return s1;
+}
+vector <string> SplitString(string s1, string delim)
+{
+    vector <string> vSpilt;
+    short pos = 0;
+    string sWords;
+    while ((pos = s1.find(delim)) != std::string::npos)
+    {
+        sWords = s1.substr(0, pos);
+        if (sWords != "")
+        {
+            vSpilt.push_back(sWords);
+        }
+        s1.erase(0, pos + delim.length());
+    }
+    if (s1 != "")
+        vSpilt.push_back(s1);
+
+    return vSpilt;
+
+}
+
+stDate StringToDate(string s1)
+{
+    stDate Date;
+    vector <string> vDate = SplitString(s1, "/");
+    Date.Day = stoi(vDate[0]);
+    Date.Month = stoi(vDate[1]);
+    Date.Year = stoi(vDate[2]);
+    return Date;
+}
+string DateToString(stDate Date)
+{
+    return to_string(Date.Day) + "/" + to_string(Date.Month) + "/" 
+        + to_string(Date.Year);
+}
+
+int main()
+{
+    string s1 = ReadString("\nPlease Enter Date dd / mm / yyyy? ");
+
+    stDate Date = StringToDate(s1);
+
+    cout << "\n Days: " << Date.Day;
+    cout << "\n Month: " << Date.Month;
+    cout << "\n Year: " << Date.Year;
+
+    cout << "\n\n your Entered: " << DateToString(Date);
+
+
+    system("pause>0");
+    return 0;
+}
+
