@@ -8,14 +8,7 @@ struct stDate {
     short Month;
     short Year;
 };
-struct stPeriods {
-    stDate Start;
-    stDate End;
-};
-enum enCompare
-{
-    Before = -1, Equal = 0, After = 1
-};
+
 
 short ReadDay()
 {
@@ -56,15 +49,6 @@ stDate ReadFullDays()
     Date.Year = ReadYear();
     return Date;
 }
-stPeriods ReadPeriods()
-{
-    stPeriods Periods;
-    cout << "\nEnter Start Date:\n";
-    Periods.Start = ReadFullDays();
-    cout << "\nEnter End Date:\n";
-    Periods.End = ReadFullDays();
-    return Periods;
-}
 
 bool IsLeapYear(short Year)
 {
@@ -84,67 +68,6 @@ short NumberofDaysInAMonth(short Month, short Year)
         NumberOfDays[Month - 1];
 
 
-}
-bool IsLsatDay(stDate Date)
-{
-    return (Date.Day == NumberofDaysInAMonth(Date.Month, Date.Year));
-}
-bool IsLastMonth(short Month)
-{
-    return (Month == 12);
-}
-stDate IncreaseDateByOneDay(stDate Date)
-{
-    if (IsLsatDay(Date))
-    {
-        if (IsLastMonth(Date.Month))
-        {
-            Date.Day = 1;
-            Date.Month = 1;
-            Date.Year++;
-        }
-        else
-        {
-            Date.Day = 1;
-            Date.Month++;
-        }
-    }
-    else
-    {
-        Date.Day++;
-    }
-
-    return Date;
-
-
-}
-
-bool IsDate1BeforeDate2(stDate Date1, stDate Date2)
-{
-    return (Date1.Year < Date2.Year) ? true : ((Date1.Year ==
-        Date2.Year) ? (Date1.Month < Date2.Month ? true : (Date1.Month ==
-            Date2.Month ? Date1.Day < Date2.Day : false)) : false);
-}
-bool IsDate1EqualDate2(stDate Date1, stDate Date2)
-{
-    return (Date1.Year == Date2.Year) ? ((Date1.Month ==
-        Date2.Month) ? ((Date1.Day == Date2.Day) ? true : false) : false)
-        : false;
-}
-enCompare CompareDate(stDate Date1, stDate Date2)
-{
-    if (IsDate1BeforeDate2(Date1, Date2))
-        return  enCompare::Before;
-    if (IsDate1EqualDate2(Date1, Date2))
-        return  enCompare::Equal;
-    return  enCompare::After;
-}
-
-bool IsDateInPeriod(stPeriods Periods, stDate Date)
-{
-    return !(CompareDate(Date, Periods.Start) == enCompare::Before
-        ||
-        CompareDate(Date, Periods.End) == enCompare::After);
 }
 
 bool IsValidateDate(stDate Date)
