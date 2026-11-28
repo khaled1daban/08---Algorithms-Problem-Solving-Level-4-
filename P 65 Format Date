@@ -1,0 +1,109 @@
+// P 65 Format Date
+
+
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+struct stDate {
+    short Day;
+    short Month;
+    short Year;
+};
+string ReadString(string masseg)
+{
+    string s1;
+    cout << masseg;
+    getline(cin >> ws, s1);
+    return s1;
+}
+vector <string> SplitString(string s1, string delim)
+{
+    vector <string> vSpilt;
+    short pos = 0;
+    string sWords;
+    while ((pos = s1.find(delim)) != std::string::npos)
+    {
+        sWords = s1.substr(0, pos);
+        if (sWords != "")
+        {
+            vSpilt.push_back(sWords);
+        }
+        s1.erase(0, pos + delim.length());
+    }
+    if (s1 != "")
+        vSpilt.push_back(s1);
+
+    return vSpilt;
+
+}
+string ReplaceWordInString(string S1, string StringToReplace,
+    string sRepalceTo)
+{
+    short pos = S1.find(StringToReplace);
+    while (pos != std::string::npos)
+    {
+        S1 = S1.replace(pos, StringToReplace.length(),
+            sRepalceTo);
+        pos = S1.find(StringToReplace);//find next
+    }
+    return S1;
+}
+
+stDate StringToDate(string s1)
+{
+    stDate Date;
+    vector <string> vDate = SplitString(s1, "/");
+    Date.Day = stoi(vDate[0]);
+    Date.Month = stoi(vDate[1]);
+    Date.Year = stoi(vDate[2]);
+    return Date;
+}
+string DateToString(stDate Date)
+{
+    return to_string(Date.Day) + "/" + to_string(Date.Month) + "/"
+        + to_string(Date.Year);
+}
+
+string FormatDate(stDate Date ,string DateFormat = "dd/mm/yyyy")
+{
+    string FormattedDateString = "";
+
+    FormattedDateString =
+        ReplaceWordInString(DateFormat, "dd", to_string(Date.Day));
+    FormattedDateString =
+        ReplaceWordInString(FormattedDateString, "mm", to_string(Date.Month));
+    FormattedDateString =
+        ReplaceWordInString(FormattedDateString, "yyyy", to_string(Date.Year));
+
+    return FormattedDateString;
+}
+
+int main()
+{
+   
+    string s1 = ReadString("\nPlease Enter Date dd / mm / yyyy? ");
+
+    stDate Date = StringToDate(s1);
+
+    cout << "\n Days: " << Date.Day;
+    cout << "\n Month: " << Date.Month;
+    cout << "\n Year: " << Date.Year;
+
+    cout << "\n\n your Entered: " << DateToString(Date);
+
+    cout << "\n\n\n";
+    cout << FormatDate(Date) << endl;
+    cout << "\n" << FormatDate(Date, "yyyy/dd/mm") << endl;
+    cout << "\n" << FormatDate(Date, "mm/dd/yyyy") << endl;
+    cout << "\n" << FormatDate(Date, "yyyy/dd/mm") << endl;
+    cout << "\n" << FormatDate(Date, "mm-dd-yyyy") << endl;
+    cout << "\n" << FormatDate(Date, "dd-mm-yyyy") << endl;
+    cout << "\n" << FormatDate(Date, "Day:dd, Month:mm, Year:yyyy") << endl;
+
+
+    system("pause>0");
+    return 0;
+}
+
